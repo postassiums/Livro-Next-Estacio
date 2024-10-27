@@ -1,5 +1,5 @@
 import LivroLista from "@/components/LivroLista";
-import { ApiGetLivros } from "@/service";
+import { ApigetEditoras, ApiGetLivros } from "@/service";
 import type { InferGetServerSidePropsType,GetServerSideProps } from "next";
 
 
