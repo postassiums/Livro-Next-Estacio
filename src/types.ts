@@ -18,7 +18,22 @@ export class Livro{
 
     }
 }
+export class CreateLivro{
 
+    titulo : string
+    resumo : string
+    editora: string
+    autores: string[]
+
+    constructor(titulo : string,resumo: string,editora: string,autores: string[])
+    {
+        this.titulo=titulo
+        this.resumo=resumo
+        this.editora=editora
+        this.autores=autores
+
+    }
+}
 export interface LivroListaProps{
     livros: Livro[]
 }

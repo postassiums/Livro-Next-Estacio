@@ -1,4 +1,4 @@
-import { Livro } from "@/types";
+import { CreateLivro, Livro } from "@/types";
 import axios from "axios";
 
 
@@ -12,7 +12,7 @@ export async function ApiGetLivros()
     return response.data
 }
 
-export async function ApiPostLivro(data : Livro)
+export async function ApiPostLivro(data : CreateLivro)
 {
     return await Api().post('/livros',data)
 }
