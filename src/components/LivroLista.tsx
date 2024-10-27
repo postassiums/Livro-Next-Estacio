@@ -1,8 +1,8 @@
 import {   useState } from "react"
-import { Livro, LivroListaProps, SessionStorageKeys } from "@/types"
+import { Livro, LivroListaProps } from "@/types"
 import LivroLinha from "./LivroLinha"
 import Title from "./Title"
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+
 
 
 
@@ -10,7 +10,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 export default function LivroLista({livros} : LivroListaProps)
 {
     const COLUMNS=['Título','Resumo','Editora','Autores']
-
+    const [livros_lista,setLivros]=useState<Array<Livro>>(livros)
 
 
 
@@ -22,6 +22,10 @@ export default function LivroLista({livros} : LivroListaProps)
         )
 
           
+    }
+    function onDelete(livro : Livro)
+    {
+        setLivros(old_livros=>old_livros.filter(item=>item.codEditora!=livro.codEditora))
     }
 
 
@@ -40,7 +44,7 @@ export default function LivroLista({livros} : LivroListaProps)
             </tr>
         </thead>
         <tbody>
-            {livros.map((item,index)=><LivroLinha  key={index} livro={item}>
+            {livros_lista.map((item,index)=><LivroLinha  onDelete={onDelete} key={index} livro={item}>
 
             </LivroLinha>)}
             

@@ -7,18 +7,14 @@ import { LivroLinhaProps } from "@/types";
 
 
 
-export default function LivroLinha({livro} : LivroLinhaProps)
+export default function LivroLinha({livro,onDelete} : LivroLinhaProps)
 {
     async function onDeleteLivro()
     {
         try{
 
             await ApiDeleteLivro(livro.codEditora)
-            if (window!=undefined)
-            {
-                window.location.reload()
-
-            }
+            onDelete(livro)
         }catch(e)
         {
             console.error(e)

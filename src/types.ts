@@ -100,6 +100,7 @@ export class NavBarLink{
 
 export interface LivroLinhaProps{
     livro: Livro
+    onDelete: (livro: Livro)=>void
 }
 
 export interface CreateLivro{
