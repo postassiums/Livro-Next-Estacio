@@ -12,7 +12,13 @@ export default function LivroLinha({livro} : LivroLinhaProps)
     async function onDeleteLivro()
     {
         try{
+
             await ApiDeleteLivro(livro.codEditora)
+            if (window!=undefined)
+            {
+                window.location.reload()
+
+            }
         }catch(e)
         {
             console.error(e)
@@ -33,7 +39,7 @@ export default function LivroLinha({livro} : LivroLinhaProps)
             <td>{livro.editora}</td>
             <td>
                 <ul>
-                    {livro.autores.map(item=><li key={item}  > {item} </li>)}
+                    {livro.autores.map((item,index)=><li key={index}  > {item} </li>)}
                 </ul>
             </td>
 
