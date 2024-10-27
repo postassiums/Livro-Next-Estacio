@@ -34,8 +34,25 @@ export class CreateLivro{
 
     }
 }
+
+
+
+export class Editora{
+    id: number
+    nome: string
+    constructor(id: number, nome: string)
+    {
+        this.id=id
+        this.nome=nome
+    }
+}
+
 export interface LivroListaProps{
     livros: Livro[]
+}
+
+export interface NovoLivroProps{
+    editoras: Editora[]
 }
 
 export interface LayoutProp{

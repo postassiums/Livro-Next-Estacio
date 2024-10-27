@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { handleCreateNewLivro as handleCreateNewLivro, handleGetAllLivros as handleGetAllLivros } from "@/server";
+import { handleCreateNewLivro as handleCreateNewLivro, handleDeleteLivro, handleGetAllLivros as handleGetAllLivros, handleGetEditoras, handleGetSpecificEditora } from "@/server";
+
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
@@ -14,11 +15,8 @@ export default async function handler(
 ) {
   switch(req.method)
   {
-    case 'POST':
-        await handleCreateNewLivro(req.body,res)
-        break
     case 'GET':
-        await handleGetAllLivros(res)
+        await handleGetSpecificEditora(req.query,res)
         break
 
   }

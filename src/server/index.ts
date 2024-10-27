@@ -1,4 +1,4 @@
-import { CreateLivro, Livro } from "@/types"
+import { CreateLivro, Editora, Livro } from "@/types"
 import { readFile, writeFile } from "fs/promises"
 import { NextApiRequest, NextApiResponse } from "next"
 import { v4 as uuid } from "uuid"
@@ -12,6 +12,53 @@ export function getLivroPath()
 {
     return path.join(getJsonPath(),'livros.json')
 }
+export function getEditoraPath()
+{
+    return path.join(getJsonPath(),'editoras.json')
+}
+
+export async function handleGetEditoras(res: NextApiResponse)
+{
+    try{
+        let editoras=await getEditorasFromJsonFile()
+        res.status(200).json(editoras)
+
+    }catch(e)
+    {
+        res.status(500).json({message: 'Hoveu um erro no Servidor',detail: e})
+    }
+}
+
+function filterEditora(editoras : Array<Editora>,id : number)
+{
+    let [target]=editoras.filter(item=>item.id==id)
+    return target
+}
+
+export async function handleGetSpecificEditora(query : NextApiRequest['query'], res: NextApiResponse)
+{
+    try{
+        let {id}=query
+        if(id==undefined)
+        {
+            res.status(403)
+            return
+        }
+        if(id instanceof Array)
+        {
+            res.status(403)
+            return
+        }
+        let editoras=await getEditorasFromJsonFile()
+        let target=filterEditora(editoras,Number(id))
+        res.status(200).json(target)
+
+    }catch(e)
+    {
+        res.status(500).json({message: 'Hoveu um erro no Servidor'})
+    }
+}
+
 
 export async function handleCreateNewLivro(body : CreateLivro,res : NextApiResponse)
 {
@@ -34,6 +81,13 @@ export async function getLivrosFromJsonFile() : Promise<Array<Livro>>
     let livro_file=await readFile(getLivroPath(),{encoding: 'utf-8' })
     return JSON.parse(livro_file)
 }
+
+export async function getEditorasFromJsonFile() : Promise<Array<Editora>>
+{
+    let editora_file=await readFile(getEditoraPath(),{encoding: 'utf-8'})
+    return JSON.parse(editora_file)
+}
+
 export  function findLivroByCodEditora(livros : Array<Livro>,codEditora : string) : Livro | undefined
 {
     let target= livros.filter(item=>item.codEditora==codEditora)

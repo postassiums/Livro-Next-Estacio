@@ -1,0 +1,45 @@
+[
+    
+        {
+            "id": 1,
+            "nome": "Companhia das Letras"
+        },
+        {
+            "id": 2,
+            "nome": "Editora Record"
+        },
+        {
+            "id": 3,
+            "nome": "Intrínseca"
+        },
+        {
+            "id": 4,
+            "nome": "Rocco"
+        },
+        {
+            "id": 5,
+            "nome": "Grupo Editorial Pensamento"
+        },
+        {
+            "id": 6,
+            "nome": "HarperCollins Brasil"
+        },
+        {
+            "id": 7,
+            "nome": "Editora Globo"
+        },
+        {
+            "id": 8,
+            "nome": "DarkSide Books"
+        },
+        {
+            "id": 9,
+            "nome": "Planeta"
+        },
+        {
+            "id": 10,
+            "nome": "Sextante"
+        }
+    
+    
+]

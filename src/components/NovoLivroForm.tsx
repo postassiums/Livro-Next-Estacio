@@ -3,26 +3,15 @@ import InputComponent from "./InputComponent";
 import Title from "./Title";
 import TextAreComponent from "./TextAreaComponent";
 import SelectComponent from "./SelectComponent";
-import { CreateLivro, Livro, SessionStorageKeys } from "@/types";
+import { CreateLivro, Livro, NovoLivroProps, SessionStorageKeys } from "@/types";
 import { useRouter } from "next/router";
 import { ApiPostLivro } from "@/service";
 
 
 
-export default function NovoLivroForm()
+export default function NovoLivroForm({editoras} : NovoLivroProps)
 {
-    const EDITORAS_OPTIONS = [
-        "Companhia das Letras",
-        "Editora Record",
-        "Intrínseca",
-        "Globo Livros",
-        "Editora Rocco",
-        "Editora 34",
-        "Editora Planeta",
-        "Editora Aleph",
-        "Sextante",
-        "DarkSide Books"
-      ];
+    const EDITORAS_OPTIONS = editoras.map(item=>item.nome);
       
     const [titulo,setTitle]=useState<string>('')
     const [resumo,setResumo]=useState<string>('')
