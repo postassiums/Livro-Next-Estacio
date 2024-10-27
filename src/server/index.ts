@@ -1,6 +1,7 @@
 import { CreateLivro, Livro } from "@/types"
 import { readFile, writeFile } from "fs/promises"
 import { NextApiRequest, NextApiResponse } from "next"
+import { v4 as uuid } from "uuid"
 import path from "path"
 
 export function getJsonPath()
@@ -15,7 +16,13 @@ export function getLivroPath()
 export async function handleCreateNewLivro(body : CreateLivro,res : NextApiResponse)
 {
     try{
-        
+        let cod_editora=uuid()
+        let new_livro=new Livro(body.titulo,body.resumo,body.editora,body.autores,cod_editora)
+        let livros=await getLivrosFromJsonFile()
+        livros.push(new_livro)
+        await writeLivros(livros)
+
+        res.status(200).json({message: 'Livro criado com sucesso'})
     }catch(e)
     {
         res.status(500).json({message: 'Hoveu um erro no Servidor'})
@@ -37,11 +44,7 @@ export  function findLivroByCodEditora(livros : Array<Livro>,codEditora : string
     return target[0]
 }
 
-export async function addNewLivroToJsonFile(new_livro : Livro) : Promise<void>
-{
-    let livros=await getLivrosFromJsonFile()
-    livros.push(new_livro)
-}
+
 export async function writeLivros(livros : Array<Livro>)
 {
     await writeFile(getLivroPath(),JSON.stringify(livros))
