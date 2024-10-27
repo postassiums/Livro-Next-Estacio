@@ -16,9 +16,9 @@ export default function LivroLista({livros} : LivroListaProps)
 
     function getTableColumns()
     {
-        return COLUMNS.map(item=>(
+        return COLUMNS.map((item,index)=>(
            
-            <th key={item} scope="col">{item}</th>)
+            <th key={index} scope="col">{item}</th>)
         )
 
           
