@@ -30,25 +30,11 @@ export default function NovoLivroForm()
     const router=useRouter()
     function onSubmitForm(e : FormEvent)
     {
-        if(window!==undefined)
-        {
-            return
-        }
         e.preventDefault()
         if(titulo && resumo && autores && editora)
         {
             
-            let new_livro=new Livro(titulo,resumo,editora,autores?.split('\n'))
-            let existing_livros : Array<Livro> = []
-            let livros_storage_item=sessionStorage.getItem(SessionStorageKeys.LIVROS)
-            if(livros_storage_item!= null)
-            {
-                existing_livros=JSON.parse(livros_storage_item) 
-            }
-
             
-            existing_livros.push(new_livro)
-            sessionStorage.setItem(SessionStorageKeys.LIVROS,JSON.stringify(existing_livros))
             router.push('/catalogo')
             
 

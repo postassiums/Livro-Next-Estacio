@@ -1,3 +1,4 @@
+import { ApiDeleteLivro } from "@/service";
 import { LivroLinhaProps } from "@/types";
 
 
@@ -6,14 +7,25 @@ import { LivroLinhaProps } from "@/types";
 
 
 
-export default function LivroLinha({livro,index,onDelete} : LivroLinhaProps)
+export default function LivroLinha({livro} : LivroLinhaProps)
 {
+    async function onDeleteLivro()
+    {
+        try{
+            await ApiDeleteLivro(livro.codEditora)
+        }catch(e)
+        {
+            console.error(e)
+        }
+    }
+
+
     return (
         <tr>
             <td >
                 <div >
                     <div className="w-100">{livro.titulo}</div>
-                    <button   onClick={()=>onDelete(index)} type="button" className="btn btn-danger mt-3">Excluir</button>
+                    <button   onClick={async()=> await onDeleteLivro()} type="button" className="btn btn-danger mt-3">Excluir</button>
                 </div>
                 
             </td>

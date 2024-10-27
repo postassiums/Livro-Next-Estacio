@@ -1,21 +1,18 @@
-import {  useState } from "react"
-import { Livro, SessionStorageKeys } from "@/types"
+import {   useState } from "react"
+import { Livro, LivroListaProps, SessionStorageKeys } from "@/types"
 import LivroLinha from "./LivroLinha"
 import Title from "./Title"
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 
 
 
 
-export default function LivroLista()
+export default function LivroLista({livros} : LivroListaProps)
 {
     const COLUMNS=['Título','Resumo','Editora','Autores']
 
 
-    let existing_livros : Array<Livro> =[]
 
-
-
-    const [livros,setLivros] =useState<Array<Livro>>([])
 
     function getTableColumns()
     {
@@ -26,18 +23,7 @@ export default function LivroLista()
 
           
     }
-    function onDeleteLivro(index : number)
-    {
-        let livros_on_storage=sessionStorage.getItem(SessionStorageKeys.LIVROS)
-        if (livros_on_storage==null)
-        {
-            return
-        }
-        let livros : Array<Livro>=JSON.parse(livros_on_storage)
-        livros.splice(index,1)
-        setLivros(livros)
-        // sessionStorage.setItem(SessionStorageKeys.LIVROS,JSON.stringify(livros))
-    }
+
 
 
 
@@ -54,7 +40,7 @@ export default function LivroLista()
             </tr>
         </thead>
         <tbody>
-            {livros.map((item,index)=><LivroLinha onDelete={onDeleteLivro} index={index} key={index} livro={item}>
+            {livros.map((item,index)=><LivroLinha  key={index} livro={item}>
 
             </LivroLinha>)}
             
