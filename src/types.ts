@@ -6,17 +6,22 @@ export class Livro{
     resumo : string
     editora: string
     autores: string[]
+    codEditora : string
 
-    constructor(titulo : string,resumo: string,editora: string,autores: string[])
+    constructor(titulo : string,resumo: string,editora: string,autores: string[],codEditora : string)
     {
         this.titulo=titulo
         this.resumo=resumo
         this.editora=editora
         this.autores=autores
+        this.codEditora=codEditora
+
     }
 }
 
-
+export interface LivroListaProps{
+    livros: Livro[]
+}
 
 export interface LayoutProp{
     children: React.ReactElement
@@ -63,6 +68,11 @@ export class NavBarLink{
 
 export interface LivroLinhaProps{
     livro: Livro
-    index: number
-    onDelete: (index: number)=>void
+}
+
+export interface CreateLivro{
+    titulo: string
+    resumo: string
+    editora: string
+    autores: string[]
 }

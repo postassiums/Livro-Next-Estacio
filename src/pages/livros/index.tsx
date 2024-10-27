@@ -1,12 +1,25 @@
 import LivroLista from "@/components/LivroLista";
+import { ApiGetLivros } from "@/service";
+import type { InferGetServerSidePropsType,GetServerSideProps } from "next";
 
 
 
-export default function CatalogoPage()
+export default function CatalogoPage({livros} :InferGetServerSidePropsType<typeof getServerSideProps>  )
 {
     return (
-        <LivroLista>
-            
+        <LivroLista livros={livros}>
+
         </LivroLista>
     )
 }
+
+export async function getServerSideProps()
+{
+    let livros=await ApiGetLivros()
+
+    return {
+        props:{
+            livros
+        }
+    } 
+} 
