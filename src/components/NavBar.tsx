@@ -10,7 +10,7 @@ export default function NavBar()
     const LINKS : Array<NavBarLink> = [
         new NavBarLink('/','Home'),
         new NavBarLink('/livros','Catálogo'),
-        new NavBarLink('/livros/new','Novo Livro')
+        new NavBarLink('/novo','Novo Livro')
     ]
     function getLinks()
     {

@@ -35,7 +35,7 @@ export default function NovoLivroForm()
         {
             
             
-            router.push('/catalogo')
+            router.push('/livros')
             
 
         }
