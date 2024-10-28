@@ -1,0 +1,10 @@
+name: estacio-m2-n2
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
