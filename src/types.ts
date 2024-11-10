@@ -1,35 +1,25 @@
 import { ChangeEventHandler } from "react"
 
-export class Livro{
-
+export interface Livro{
+    _id: string
     titulo : string
     resumo : string
     editora: string
     autores: string[]
-    codEditora : string
 
-    constructor(titulo : string,resumo: string,editora: string,autores: string[],codEditora : string)
-    {
-        this.titulo=titulo
-        this.resumo=resumo
-        this.editora=editora
-        this.autores=autores
-        this.codEditora=codEditora
-
-    }
 }
 export class CreateLivro{
 
     titulo : string
     resumo : string
-    editora: string
+    codEditora: number
     autores: string[]
 
-    constructor(titulo : string,resumo: string,editora: string,autores: string[])
+    constructor(titulo : string,resumo: string,codEditora: number,autores: string[])
     {
         this.titulo=titulo
         this.resumo=resumo
-        this.editora=editora
+        this.codEditora=codEditora
         this.autores=autores
 
     }
@@ -38,11 +28,11 @@ export class CreateLivro{
 
 
 export class Editora{
-    id: number
+    codigo: number
     nome: string
-    constructor(id: number, nome: string)
+    constructor(codigo: number, nome: string)
     {
-        this.id=id
+        this.codigo=codigo
         this.nome=nome
     }
 }
@@ -80,7 +70,7 @@ export interface SelectComponentProps{
     label: string,
     value: any,
     setState:  React.Dispatch<React.SetStateAction<string>>
-    options: string[],
+    options: {label: string,value: string}[],
     is_required: boolean
 }
 

@@ -25,7 +25,7 @@ export default function LivroLista({livros} : LivroListaProps)
     }
     function onDelete(livro : Livro)
     {
-        setLivros(old_livros=>old_livros.filter(item=>item.codEditora!=livro.codEditora))
+        setLivros(old_livros=>old_livros.filter(item=>item._id!=livro._id))
     }
 
 

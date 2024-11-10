@@ -10,6 +10,7 @@ COPY . .
 
 COPY pnpm-lock.yaml .
 
-ENTRYPOINT [ "pnpm" ]
+RUN pnpm i
 
-CMD [ "run","dev" ]
+
+ENTRYPOINT [ "pnpm","dlx","next","dev" ]

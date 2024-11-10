@@ -3,8 +3,15 @@ services:
   app:
     build:
       context: .
+    command: -p $PORT
+    container_name: livros-next
+    hostname: estacio.next.livraria
     volumes:
       - .:/app
       - /app/node_modules
     ports:
-      - 3000:3000
+      - $PORT:$PORT
+networks:
+  estacio-net:
+    external: true 
+    name: estacio-net

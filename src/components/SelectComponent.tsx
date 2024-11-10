@@ -5,7 +5,7 @@ export default function SelectComponent({label,options,setState,value,is_require
 {
     function getOptions()
     {
-        return options.map((option,index)=><option key={index} >{option} </option>)
+        return options.map((option,index)=><option value={option.value} key={index} >{option.label} </option>)
     }
     return (
         <>

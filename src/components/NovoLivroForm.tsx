@@ -3,7 +3,7 @@ import InputComponent from "./InputComponent";
 import Title from "./Title";
 import TextAreComponent from "./TextAreaComponent";
 import SelectComponent from "./SelectComponent";
-import { CreateLivro, Livro, NovoLivroProps, SessionStorageKeys } from "@/types";
+import { CreateLivro, Livro, NovoLivroProps, SelectComponentProps, SessionStorageKeys } from "@/types";
 import { useRouter } from "next/router";
 import { ApiPostLivro } from "@/service";
 
@@ -11,24 +11,26 @@ import { ApiPostLivro } from "@/service";
 
 export default function NovoLivroForm({editoras} : NovoLivroProps)
 {
-    const EDITORAS_OPTIONS = editoras.map(item=>item.nome);
+    const EDITORAS_OPTIONS : SelectComponentProps['options'] = editoras.map(item=>({label: item.nome,value: String(item.codigo)}));
       
     const [titulo,setTitle]=useState<string>('')
     const [resumo,setResumo]=useState<string>('')
     const [autores,setAutores]=useState<string>('')
-    const [editora,setEditora]=useState<string>(EDITORAS_OPTIONS[0])
+    const [editora,setEditora]=useState<string>(EDITORAS_OPTIONS[0].value)
     const router=useRouter()
     async function onSubmitForm(e : FormEvent)
     {
         e.preventDefault()
         if(titulo && resumo && autores && editora)
         {
-            let new_livro=new CreateLivro(titulo,resumo,editora,autores.split('\n'))
-            await ApiPostLivro(new_livro)
-            router.push('/livros')
+            return
             
 
         }
+
+        let new_livro=new CreateLivro(titulo,resumo,Number(editora),autores.split('\n'))
+        await ApiPostLivro(new_livro)
+        router.push('/livros')
     }
 
     return (

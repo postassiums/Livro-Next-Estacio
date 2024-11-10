@@ -4,7 +4,7 @@ import axios from "axios";
 
 export function Api()
 {
-    return axios.create({baseURL: 'http://localhost:3000/api',responseType: 'json'})
+    return axios.create({baseURL: process.env.API_URL,responseType: 'json'})
 }
 export async function ApiGetLivros()
 {
@@ -17,9 +17,9 @@ export async function ApiPostLivro(data : CreateLivro)
     return await Api().post('/livros',data)
 }
 
-export async function ApiDeleteLivro(codEditora : string)
+export async function ApiDeleteLivro(id : string)
 {
-    return await Api().delete(`livros/${codEditora}`)
+    return await Api().delete(`livros/${id}`)
 }
 
 export async function ApiGetEditoras()
