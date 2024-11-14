@@ -6,6 +6,7 @@ import SelectComponent from "./SelectComponent";
 import { CreateLivro, Livro, NovoLivroProps, SelectComponentProps, SessionStorageKeys } from "@/types";
 import { useRouter } from "next/router";
 import { ApiPostLivro } from "@/service";
+import axios from "axios";
 
 
 
@@ -16,20 +17,23 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
     const [titulo,setTitle]=useState<string>('')
     const [resumo,setResumo]=useState<string>('')
     const [autores,setAutores]=useState<string>('')
-    const [editora,setEditora]=useState<string>(EDITORAS_OPTIONS[0].value)
+    const [editora,setEditora]=useState<string>('')
     const router=useRouter()
-    async function onSubmitForm(e : FormEvent)
+    async function onSubmitForm(data : FormData)
     {
-        e.preventDefault()
-        if(titulo && resumo && autores && editora)
+        "use server"
+        
+      
+        let titulo=data.get('titulo')?.toString()
+        let resumo=data.get('resumo')?.toString()
+        let editora=Number(data.get('editora'))
+        let autores=data.get('autores')?.toString().split('\n')
+        if(!(titulo && resumo && editora && autores))
         {
             return
-            
-
         }
-
-        let new_livro=new CreateLivro(titulo,resumo,Number(editora),autores.split('\n'))
-        await ApiPostLivro(new_livro)
+        let new_livro=new CreateLivro(titulo,resumo,editora,autores)
+        let result=await ApiPostLivro(new_livro)
         router.push('/livros')
     }
 
@@ -38,27 +42,28 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
             <Title title="Dados do Livro">
 
             </Title>
-            <form  onSubmit={onSubmitForm} >
+            <form action={onSubmitForm}   >
 
-            
+   
                 <div className="form-group mb-3">
-                    <InputComponent is_required={true} setState={setTitle} value={titulo} label="Titulo"  >
+                    <InputComponent name="titulo" is_required={true} setState={setTitle} value={titulo} label="Titulo"  >
                     </InputComponent>
                    
                 </div>
                 <div className="form-group mb-3">
-                    <TextAreComponent is_required={true} setState={setResumo} value={resumo} label="Resumo" >
+                    <TextAreComponent name="resumo" is_required={true} setState={setResumo} value={resumo} label="Resumo" >
 
                     </TextAreComponent>
                 </div>
+                {editora}
                 <div className="form-group mb-3">
-                    <SelectComponent is_required={true} label="Editora" setState={setEditora} value={editora} options={EDITORAS_OPTIONS} >
+                    <SelectComponent name="editora" is_required={true} label="Editora" setState={setEditora} value={editora} options={EDITORAS_OPTIONS} >
 
                     </SelectComponent>
                 </div>
 
                 <div className="form-group mb-3">
-                    <TextAreComponent is_required={true} label="Autores (1 por linha)" value={autores} setState={setAutores}  >
+                    <TextAreComponent name="autores" is_required={true} label="Autores (1 por linha)" value={autores} setState={setAutores}  >
 
                     </TextAreComponent>
                 </div>

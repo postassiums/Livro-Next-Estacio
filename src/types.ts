@@ -51,6 +51,7 @@ export interface LayoutProp{
 
 export interface InputComponentProps{
     label: string,
+    name: string
     placeholder?: string,
     value: any,
     setState: React.Dispatch<React.SetStateAction<string>>,
@@ -64,11 +65,13 @@ export enum SessionStorageKeys{
 export interface TextAreaComponentProps extends Pick<InputComponentProps,'label' | 'placeholder' | 'value'>{
     setState:  React.Dispatch<React.SetStateAction<string>>
     is_required: boolean
+    name: string
 }
 
 export interface SelectComponentProps{
     label: string,
     value: any,
+    name: string
     setState:  React.Dispatch<React.SetStateAction<string>>
     options: {label: string,value: string}[],
     is_required: boolean

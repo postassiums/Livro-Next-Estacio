@@ -1,5 +1,6 @@
 import NovoLivroForm from "@/components/NovoLivroForm";
 import { ApiGetEditoras } from "@/service";
+import { Editora } from "@/types";
 import type{ InferGetServerSidePropsType } from "next";
 
 
@@ -14,7 +15,14 @@ export default function CreateNewLivroPage({editoras} : InferGetServerSidePropsT
 
 export async function getServerSideProps()
 {
-    let editoras=await ApiGetEditoras()
+    let editoras : Array<Editora>=[]
+    try{
+
+        editoras=await ApiGetEditoras()
+    }catch(e)
+    {
+        console.error(e)
+    }
 
     return {
         props:{

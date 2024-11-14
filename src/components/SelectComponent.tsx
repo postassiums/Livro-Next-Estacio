@@ -1,7 +1,7 @@
 import { SelectComponentProps } from "@/types"
 
 
-export default function SelectComponent({label,options,setState,value,is_required=false} : SelectComponentProps)
+export default function SelectComponent({label,options,setState,value,name,is_required=false} : SelectComponentProps)
 {
     function getOptions()
     {
@@ -10,7 +10,7 @@ export default function SelectComponent({label,options,setState,value,is_require
     return (
         <>
             <label htmlFor={label}>{label}</label>
-            <select required={is_required} onChange={data=>setState(data.target.value)} value={value} className="form-select" id={label}>
+            <select name={name} required={is_required} onChange={data=>setState(data.target.value)} value={value} className="form-select" id={label}>
                 {getOptions()}
             
             </select>
