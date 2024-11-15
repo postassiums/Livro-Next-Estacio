@@ -2,7 +2,7 @@ import { CreateLivro, Editora, Livro } from "@/types";
 import axios from "axios";
 
 
-export const API_URL='http://localhost:8080'
+export const API_URL='http://estacio_backend:8080'
 
 export function Api()
 {

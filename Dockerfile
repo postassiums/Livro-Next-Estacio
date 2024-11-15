@@ -1,6 +1,4 @@
-FROM --platform=amd64 node:23-alpine as base
-
-RUN apk update && apk upgrade
+FROM --platform=amd64 node:23.1.0 as base
 
 RUN npm install -g pnpm
 
@@ -13,4 +11,4 @@ COPY pnpm-lock.yaml .
 RUN pnpm i
 
 
-ENTRYPOINT [ "pnpm","dlx","next","dev" ]
+ENTRYPOINT [ "pnpm","next","dev" ]
