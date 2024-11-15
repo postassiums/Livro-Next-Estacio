@@ -4,29 +4,12 @@ import { Editora } from "@/types";
 import type{ InferGetServerSidePropsType } from "next";
 
 
-export default function CreateNewLivroPage({editoras} : InferGetServerSidePropsType<typeof getServerSideProps>)
+export default function CreateNewLivroPage()
 {
     return (
-        <NovoLivroForm editoras={editoras}  >
+        <NovoLivroForm  >
             
         </NovoLivroForm>
     )
 }
 
-export async function getServerSideProps()
-{
-    let editoras : Array<Editora>=[]
-    try{
-
-        editoras=await ApiGetEditoras()
-    }catch(e)
-    {
-        console.error(e)
-    }
-
-    return {
-        props:{
-            editoras
-        }
-    }
-}

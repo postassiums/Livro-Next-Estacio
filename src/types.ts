@@ -37,13 +37,8 @@ export class Editora{
     }
 }
 
-export interface LivroListaProps{
-    livros: Livro[]
-}
 
-export interface NovoLivroProps{
-    editoras: Editora[]
-}
+
 
 export interface LayoutProp{
     children: React.ReactElement

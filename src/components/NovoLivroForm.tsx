@@ -1,28 +1,35 @@
-"use server"
-import { FormEvent, useState } from "react";
+
+import { FormEvent, useEffect, useState } from "react";
 import InputComponent from "./InputComponent";
 import Title from "./Title";
 import TextAreComponent from "./TextAreaComponent";
 import SelectComponent from "./SelectComponent";
-import { CreateLivro, Livro, NovoLivroProps, SelectComponentProps, SessionStorageKeys } from "@/types";
+import { CreateLivro, Livro, SelectComponentProps, SessionStorageKeys } from "@/types";
 import { useRouter } from "next/router";
-import { ApiPostLivro } from "@/service";
+import { ApiGetEditoras, ApiPostLivro } from "@/service";
 import axios from "axios";
 
 
 
-export default function NovoLivroForm({editoras} : NovoLivroProps)
+export default function NovoLivroForm()
 {
-    const EDITORAS_OPTIONS : SelectComponentProps['options'] = editoras.map(item=>({label: item.nome,value: String(item.codigo)}));
-      
+    const [editoraOptions,setEditoraOptions]=useState<SelectComponentProps['options']>([])
     const [titulo,setTitle]=useState<string>('')
     const [resumo,setResumo]=useState<string>('')
     const [autores,setAutores]=useState<string>('')
     const [editora,setEditora]=useState<string>('')
     const router=useRouter()
+
+    useEffect(()=>{
+        ApiGetEditoras().then((new_editoras)=>{
+            let formated_editoras : typeof editoraOptions =new_editoras.map(item=>({label: item.nome,value: String(item.codigo)}))
+            setEditoraOptions(formated_editoras)
+        })
+    },[])
+
     async function onSubmitForm(data : FormData)
     {
-        
+        "use server"
         
       
         let titulo=data.get('titulo')?.toString()
@@ -34,7 +41,7 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
             return
         }
         let new_livro=new CreateLivro(titulo,resumo,editora,autores)
-        let result=await ApiPostLivro(new_livro,'http://localhost:8080')
+        let result=await ApiPostLivro(new_livro)
         router.push('/livros')
     }
 
@@ -57,7 +64,7 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
                     </TextAreComponent>
                 </div>
                 <div className="form-group mb-3">
-                    <SelectComponent name="editora" is_required={true} label="Editora" setState={setEditora} value={editora} options={EDITORAS_OPTIONS} >
+                    <SelectComponent name="editora" is_required={true} label="Editora" setState={setEditora} value={editora} options={editoraOptions} >
 
                     </SelectComponent>
                 </div>

@@ -2,12 +2,12 @@ import { CreateLivro, Editora, Livro } from "@/types";
 import axios from "axios";
 
 
-export const API_URL='http://estacio_backend:8080'
+export const API_URL='http://localhost:8080'
 
-export function Api(url=API_URL)
+export function Api()
 {
     
-    return axios.create({baseURL: url,responseType: 'json'})
+    return axios.create({baseURL: API_URL,responseType: 'json'})
 }
 
 
@@ -17,17 +17,17 @@ export async function ApiGetLivros()
     return response.data
 }
 
-export async function ApiPostLivro(data : CreateLivro,url=API_URL)
+export async function ApiPostLivro(data : CreateLivro)
 {
 
-    let response= await Api(url).post('/livros',data)
+    let response= await Api().post('/livros',data)
     console.log(response)
     return response.data
 }
 
-export async function ApiDeleteLivro(id : string,url=API_URL)
+export async function ApiDeleteLivro(id : string)
 {
-    return await Api(url).delete(`livros/${id}`)
+    return await Api().delete(`livros/${id}`)
 }
 
 export async function ApiGetEditoras()

@@ -1,18 +1,24 @@
-import {   useState } from "react"
-import { Livro, LivroListaProps } from "@/types"
+import {   useEffect, useState } from "react"
+import { Livro } from "@/types"
 import LivroLinha from "./LivroLinha"
 import Title from "./Title"
+import { ApiGetLivros } from "@/service"
 
 
 
 
 
-export default function LivroLista({livros} : LivroListaProps)
+export default function LivroLista()
 {
     const COLUMNS=['Título','Resumo','Editora','Autores']
-    const [livros_lista,setLivros]=useState<Array<Livro>>(livros)
+    const [livros_lista,setLivros]=useState<Array<Livro>>([])
 
 
+    useEffect(()=>{
+        ApiGetLivros().then((new_livros)=>{
+            setLivros(new_livros)
+        })
+    },[])
 
     function getTableColumns()
     {

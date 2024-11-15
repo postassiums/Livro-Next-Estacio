@@ -5,29 +5,12 @@ import type { InferGetServerSidePropsType,GetServerSideProps } from "next";
 
 
 
-export default function CatalogoPage({livros} :InferGetServerSidePropsType<typeof getServerSideProps>  )
+export default function CatalogoPage()
 {
     return (
-        <LivroLista livros={livros}>
+        <LivroLista >
 
         </LivroLista>
     )
 }
 
-export async function getServerSideProps()
-{
-    let livros : Array<Livro>=[]
-    try{
-        livros=await ApiGetLivros()
-        
-    }catch(e)
-    {
-        console.error(e)
-    }
-
-    return {
-        props:{
-            livros
-        }
-    } 
-} 

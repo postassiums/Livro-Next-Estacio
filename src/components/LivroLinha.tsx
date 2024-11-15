@@ -13,7 +13,7 @@ export default function LivroLinha({livro,onDelete} : LivroLinhaProps)
     {
         try{
 
-            await ApiDeleteLivro(livro._id,'http://localhost:8080')
+            await ApiDeleteLivro(livro._id)
             onDelete(livro)
         }catch(e)
         {
