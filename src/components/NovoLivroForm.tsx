@@ -1,3 +1,4 @@
+"use server"
 import { FormEvent, useState } from "react";
 import InputComponent from "./InputComponent";
 import Title from "./Title";
@@ -21,7 +22,7 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
     const router=useRouter()
     async function onSubmitForm(data : FormData)
     {
-        "use server"
+        
         
       
         let titulo=data.get('titulo')?.toString()
@@ -33,7 +34,7 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
             return
         }
         let new_livro=new CreateLivro(titulo,resumo,editora,autores)
-        let result=await ApiPostLivro(new_livro)
+        let result=await ApiPostLivro(new_livro,'http://localhost:8080')
         router.push('/livros')
     }
 
@@ -55,7 +56,6 @@ export default function NovoLivroForm({editoras} : NovoLivroProps)
 
                     </TextAreComponent>
                 </div>
-                {editora}
                 <div className="form-group mb-3">
                     <SelectComponent name="editora" is_required={true} label="Editora" setState={setEditora} value={editora} options={EDITORAS_OPTIONS} >
 
