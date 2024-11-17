@@ -36,10 +36,19 @@ export class Editora{
         this.nome=nome
     }
 }
+export interface ButtonProps{
+    loading?: boolean,
+    label: string,
+    type: 'submit' | 'button'
+    className?: string
+    onClick: ()=>any
+}
 
 
-
-
+export interface SpinnerProps{
+    show: boolean
+    style?: any
+}
 export interface LayoutProp{
     children: React.ReactElement
 }
@@ -69,6 +78,7 @@ export interface SelectComponentProps{
     name: string
     setState:  React.Dispatch<React.SetStateAction<string>>
     options: {label: string,value: string}[],
+    isLoading?: boolean
     is_required: boolean
 }
 

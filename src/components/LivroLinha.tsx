@@ -1,5 +1,8 @@
 import { ApiDeleteLivro } from "@/service";
 import { LivroLinhaProps } from "@/types";
+import ButtonComponent from "./ButtonComponent";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 
 
@@ -9,15 +12,18 @@ import { LivroLinhaProps } from "@/types";
 
 export default function LivroLinha({livro,onDelete} : LivroLinhaProps)
 {
+    const [isDeleting,setIsDeleting]=useState<boolean>(false)
     async function onDeleteLivro()
     {
         try{
-
+            setIsDeleting(true)
             await ApiDeleteLivro(livro._id)
             onDelete(livro)
         }catch(e)
         {
             console.error(e)
+        }finally{
+            setIsDeleting(false)
         }
     }
 
@@ -27,7 +33,10 @@ export default function LivroLinha({livro,onDelete} : LivroLinhaProps)
             <td >
                 <div >
                     <div className="w-100">{livro.titulo}</div>
-                    <button   onClick={async()=> await onDeleteLivro()} type="button" className="btn btn-danger mt-3">Excluir</button>
+                    <ButtonComponent  loading={isDeleting} type="button" className="btn btn-danger mt-3" label="Excluir" onClick={onDeleteLivro}>
+
+                    </ButtonComponent>
+                
                 </div>
                 
             </td>

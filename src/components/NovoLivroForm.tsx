@@ -8,6 +8,7 @@ import { CreateLivro, Livro, SelectComponentProps, SessionStorageKeys } from "@/
 import { useRouter } from "next/router";
 import { ApiGetEditoras, ApiPostLivro } from "@/service";
 import axios from "axios";
+import ButtonComponent from "./ButtonComponent";
 
 
 
@@ -18,19 +19,22 @@ export default function NovoLivroForm()
     const [resumo,setResumo]=useState<string>('')
     const [autores,setAutores]=useState<string>('')
     const [editora,setEditora]=useState<string>('')
+    const [isCreating,setIsCreating]=useState<boolean>(false)
+    const [isEditoraLoading,setIsEditoraLoading]=useState<boolean>(false)
     const router=useRouter()
 
     useEffect(()=>{
         ApiGetEditoras().then((new_editoras)=>{
+            setIsEditoraLoading(true)
             let formated_editoras : typeof editoraOptions =new_editoras.map(item=>({label: item.nome,value: String(item.codigo)}))
             setEditoraOptions(formated_editoras)
-        })
+        }).finally(()=>setIsEditoraLoading(false))
     },[])
 
     async function onSubmitForm(data : FormData)
     {
         "use server"
-        
+        setIsCreating(true)
       
         let titulo=data.get('titulo')?.toString()
         let resumo=data.get('resumo')?.toString()
@@ -42,6 +46,7 @@ export default function NovoLivroForm()
         }
         let new_livro=new CreateLivro(titulo,resumo,editora,autores)
         let result=await ApiPostLivro(new_livro)
+        setIsCreating(false)
         router.push('/livros')
     }
 
@@ -64,7 +69,7 @@ export default function NovoLivroForm()
                     </TextAreComponent>
                 </div>
                 <div className="form-group mb-3">
-                    <SelectComponent name="editora" is_required={true} label="Editora" setState={setEditora} value={editora} options={editoraOptions} >
+                    <SelectComponent isLoading={isEditoraLoading} name="editora" is_required={true} label="Editora" setState={setEditora} value={editora} options={editoraOptions} >
 
                     </SelectComponent>
                 </div>
@@ -74,7 +79,9 @@ export default function NovoLivroForm()
 
                     </TextAreComponent>
                 </div>
-                <button type="submit" className="btn btn-primary">Salvar Dados</button>
+                <ButtonComponent loading={isCreating} type="submit" label="Salvar Dados" onClick={()=>{}} >
+
+                </ButtonComponent>
         
             </form>
         </>

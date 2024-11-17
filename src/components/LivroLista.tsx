@@ -3,6 +3,7 @@ import { Livro } from "@/types"
 import LivroLinha from "./LivroLinha"
 import Title from "./Title"
 import { ApiGetLivros } from "@/service"
+import Spinner from "./Spinner"
 
 
 
@@ -12,12 +13,16 @@ export default function LivroLista()
 {
     const COLUMNS=['Título','Resumo','Editora','Autores']
     const [livros_lista,setLivros]=useState<Array<Livro>>([])
+    const [isLivroLoading,setIsLivroLoading]=useState<boolean>(true)
 
 
     useEffect(()=>{
-        ApiGetLivros().then((new_livros)=>{
+        ApiGetLivros()
+        .then((new_livros)=>{
+            setIsLivroLoading(true)
             setLivros(new_livros)
         })
+        .finally(()=>setIsLivroLoading(false))
     },[])
 
     function getTableColumns()
@@ -56,6 +61,12 @@ export default function LivroLista()
             
         </tbody>
         </table>
+        <div className="d-flex justify-content-center">
+            <Spinner style={{width: '4em',height: '4em'}} show={isLivroLoading}>
+
+            </Spinner>
+
+        </div>
 
 
         </>
